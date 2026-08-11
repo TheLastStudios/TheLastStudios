@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Studios</title>
+    <!-- Google Font & FontAwesome İkonları -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #08090d;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-color: #ff3366;
+            --accent-glow: rgba(255, 51, 102, 0.35);
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Arka Plan Neon Işımaları */
+        .bg-glow {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: var(--accent-glow);
+            filter: blur(140px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-1 { top: -50px; left: -50px; }
+        .glow-2 { bottom: 10%; right: -50px; background: rgba(0, 210, 255, 0.2); }
+
+        /* Yüzen Oyun Sticker'ları */
+        .sticker {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.15);
+            user-select: none;
+            pointer-events: none;
+            animation: float 5s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        .st-1 { top: 15%; left: 8%; animation-delay: 0s; }
+        .st-2 { top: 35%; right: 10%; animation-delay: 1s; }
+        .st-3 { top: 60%; left: 6%; animation-delay: 2s; }
+        .st-4 { top: 80%; right: 12%; animation-delay: 1.5s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(15deg); }
+        }
+
+        /* Sağ Üst Dil Butonu */
+        .lang-switch {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: rgba(15, 23, 42, 0.7);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            padding: 10px 22px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Bölümler */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 1. HERO BÖLÜMÜ */
+        .hero-logo {
+            width: 320px;
+            max-width: 85%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hero-logo:hover {
+            transform: scale(1.04);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 2. HAKKIMIZDA BÖLÜMÜ */
+        .about-card {
+            max-width: 700px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            padding: 45px 35px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .about h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            display: inline-block;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-sub);
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(253, 29, 29, 0.3);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(253, 29, 29, 0.5);
+        }
+
+        /* 3. YAKINDA & STICKY BÖLÜMÜ */
+        .sticky-wrapper {
+            height: 200vh;
+            position: relative;
+        }
+
+        .sticky-section {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(8, 9, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--card-border);
+        }
+
+        .sticky-section h2 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #ffffff;
+            margin-bottom: 35px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: pulse 2.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1.02); }
+        }
+
+        .upcoming-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 30px 40px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .upcoming-text {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .jelly-logo {
+            width: 260px;
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .jelly-logo:hover {
+            transform: scale(1.08) rotate(-2deg);
+        }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.2rem; }
+            .sticky-section h2 { font-size: 2.8rem; }
+            .about-card { padding: 30px 20px; }
+            .about p { font-size: 0.98rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Arka Plan Neon Effect -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+
+    <!-- Oyun Sticker'ları -->
+    <i class="fa-solid fa-gamepad sticker st-1"></i>
+    <i class="fa-solid fa-ghost sticker st-2"></i>
+    <i class="fa-solid fa-dragon sticker st-3"></i>
+    <i class="fa-solid fa-vr-cardboard sticker st-4"></i>
+
+    <!-- Sağ Üst Dil Butonu -->
+    <div class="lang-switch">
+        <button class="lang-btn" id="langBtn" onclick="toggleLanguage()">EN</button>
+    </div>
+
+    <!-- 1. Bölüm: Orijinal Logo ve Başlık -->
+    <section class="hero">
+        <img src="https://i.hizliresim.com/tl38ybpr.jpg" alt="The Last Studios Logo" class="hero-logo">
+        <h1 id="title">The Last Studios</h1>
+    </section>
+
+    <!-- 2. Bölüm: Hakkımızda -->
+    <section class="about">
+        <div class="about-card">
+            <h2 id="aboutHeader">Hakkımızda</h2>
+            <p id="aboutText">
+                Merhaba ben bir oyun geliştiricisi olan TheLast oyunlarımızın gelişiminde bize destek olanlara teşekkürlerimiz sonsuz Eğer bir fikriniz, Geri bildiriminiz varsa lütfen bize ulaşınız
+            </p>
+            <a href="https://instagram.com/thelaststudios" target="_blank" class="social-link">
+                <i class="fa-brands fa-instagram"></i> instagram:@thelaststudios
+            </a>
+        </div>
+    </section>
+
+    <!-- 3. Bölüm: Takılan "Yakında..." Kısmı -->
+    <div class="sticky-wrapper">
+        <div class="sticky-section">
+            <h2 id="comingSoon">Yakında…</h2>
+            
+            <div class="upcoming-card">
+                <span class="upcoming-text" id="upcomingText">Yakında yapımı başlıyacak oyun için:</span>
+                <a href="https://instagram.com/jellybomofficial" target="_blank">
+                    <img src="https://i.hizliresim.com/fopptcb1.png" alt="JellyBom Logo" class="jelly-logo">
+                </a>
+                <a href="https://instagram.com/jellybomofficial" target="_blank" class="social-link">
+                    <i class="fa-brands fa-instagram"></i> instagram:@jellybomofficial
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            tr: {
+                btn: "EN",
+                aboutHeader: "Hakkımızda",
+                aboutText: "Merhaba ben bir oyun geliştiricisi olan TheLast oyunlarımızın gelişiminde bize destek olanlara teşekkürlerimiz sonsuz Eğer bir fikriniz, Geri bildiriminiz varsa lütfen bize ulaşınız",
+                comingSoon: "Yakında…",
+                upcomingText: "Yakında yapımı başlıyacak oyun için:"
+            },
+            en: {
+                btn: "TR",
+                aboutHeader: "About Us",
+                aboutText: "Hello, I am TheLast, a game developer. Endless thanks to everyone who supports us in the development of our games. If you have an idea or feedback, please contact us.",
+                comingSoon: "Coming Soon…",
+                upcomingText: "For our upcoming game:"
+            }
+        };
+
+        let currentLang = "tr";
+
+        function toggleLanguage() {
+            currentLang = currentLang === "tr" ? "en" : "tr";
+            
+            document.getElementById("langBtn").innerText = translations[currentLang].btn;
+            document.getElementById("aboutHeader").innerText = translations[currentLang].aboutHeader;
+            document.getElementById("aboutText").innerText = translations[currentLang].aboutText;
+            document.getElementById("comingSoon").innerText = translations[currentLang].comingSoon;
+            document.getElementById("upcomingText").innerText = translations[currentLang].upcomingText;
+        }
+    </script>
+</body>
+</html>
